@@ -75,7 +75,7 @@ def demo(opt):
               extreme_points = list(map(to_float, bbox[5:13]))
               detection["extreme_points"] = extreme_points
           detections.append(detection)
-      json.dump(detections,open('./results_demo.json', 'w'))
+    json.dump(detections,open('./results_demo.json', 'w'))
 
 if __name__ == '__main__':
   opt = opts().init()
