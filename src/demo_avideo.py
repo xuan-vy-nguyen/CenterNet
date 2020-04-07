@@ -13,6 +13,7 @@ from opts import opts
 from detectors.detector_factory import detector_factory
 from utils.debugger import Debugger
 
+
 def demo(opt):
     class_map = {1: 9, 2: 12} # color for boundingbox
     os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
@@ -22,7 +23,7 @@ def demo(opt):
 
     assert os.path.isdir(opt.demo), 'Need path to videos directory.'
     video_paths = [
-        os.path.join(opt.demo, video_name) for video_name in os.listdir(opt.demo) if video_name.split('.')[-1] == 'mp4'
+        os.path.join(opt.demo, 'cam_2.mp4')
     ]
     debugger = Debugger(dataset=opt.dataset, theme=opt.debugger_theme)
 

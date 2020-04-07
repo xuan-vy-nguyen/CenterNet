@@ -455,7 +455,7 @@ coco_class_name = [
      'oven', 'toaster', 'sink', 'refrigerator', 'book', 'clock', 'vase',
      'scissors', 'teddy bear', 'hair drier', 'toothbrush'
 ]
-
+#B-G-R
 color_list = np.array(
         [
             1.000, 1.000, 1.000,
