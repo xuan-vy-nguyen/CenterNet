@@ -28,7 +28,7 @@ def demo(opt):
     debugger = Debugger(dataset=opt.dataset, theme=opt.debugger_theme)
 
     for video_path in sorted(video_paths):
-        print(video_path)
+        print('video_name = ', video_path)
 
         bboxes = []
         video = cv2.VideoCapture(video_path)
@@ -38,7 +38,7 @@ def demo(opt):
         pts = []
         arr_name = os.path.basename(video_path).split('.')[0].split('_')
         cam_name = arr_name[0]+'_'+arr_name[1]
-        print(cam_name)
+        print('cam_name = ',cam_name)
         with open('../ROIs/{}.txt'.format(cam_name)) as f:
           for line in f:
             pts.append([int(x) for x in line.split(',')])

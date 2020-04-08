@@ -21,23 +21,23 @@ class COCO(data.Dataset):
   def __init__(self, opt, split):
     super(COCO, self).__init__()
     self.data_dir = os.path.join(opt.data_dir, 'abc')
-    self.img_dir = os.path.join(self.data_dir, 'train')
+    self.img_dir = os.path.join(self.data_dir, 'images')
     if split == 'test':
       self.annot_path = os.path.join(
-          self.data_dir, 'annotations', 
-          'train2.json').format(split)
+          self.data_dir, 'labels', 
+          'instances_val_car.json').format(split)
     else:
       if opt.task == 'exdet':
         self.annot_path = os.path.join(
-          self.data_dir, 'annotations', 
-          'train2.json').format(split)
+          self.data_dir, 'labels', 
+          'instances_train_car.json').format(split)
       else:
         self.annot_path = os.path.join(
-          self.data_dir, 'annotations', 
-          'train2.json').format(split)
+          self.data_dir, 'labels', 
+          'instances_train_car.json').format(split)
     self.max_objs = 128
     self.class_name = [
-      'car','truck','other']
+      '__background__','car','truck']
     self._valid_ids = [
       1, 2, 3]
     self.cat_ids = {v: i for i, v in enumerate(self._valid_ids)}
