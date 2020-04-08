@@ -26,7 +26,7 @@ def demo(opt):
     ]
     debugger = Debugger(dataset=opt.dataset, theme=opt.debugger_theme)
 
-    for video_path in video_paths:
+    for video_path in sorted(video_paths):
         bboxes = []
         video = cv2.VideoCapture(video_path)
         width, height = int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -41,6 +41,7 @@ def demo(opt):
         num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         for i in tqdm(range(num_frames)):
             _, img = video.read()
+            
             ret = detector.run(img)
             bboxes.append(ret['results'])
             debugger.add_img(img, img_id='default')

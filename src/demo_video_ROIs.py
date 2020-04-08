@@ -4,6 +4,7 @@ from __future__ import print_function
 
 import _init_paths
 
+import numpy as np
 import os
 import cv2
 from tqdm import tqdm
@@ -12,7 +13,6 @@ import pickle
 from opts import opts
 from detectors.detector_factory import detector_factory
 from utils.debugger import Debugger
-
 
 def demo(opt):
     class_map = {1: 1, 2: 2} # color for boundingbox
@@ -23,14 +23,31 @@ def demo(opt):
 
     assert os.path.isdir(opt.demo), 'Need path to videos directory.'
     video_paths = [
-        os.path.join(opt.demo, 'cam_2.mp4')
+        os.path.join(opt.demo, video_name) for video_name in os.listdir(opt.demo) if video_name.split('.')[-1] == 'mp4'
     ]
     debugger = Debugger(dataset=opt.dataset, theme=opt.debugger_theme)
 
-    for video_path in video_paths:
+    for video_path in sorted(video_paths):
+        print(video_path)
+
         bboxes = []
         video = cv2.VideoCapture(video_path)
         width, height = int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
+        # pointer
+        pts = []
+        arr_name = os.path.basename(video_path).split('.')[0].split('_')
+        cam_name = arr_name[0]+'_'+arr_name[1]
+        print(cam_name)
+        with open('../ROIs/{}.txt'.format(cam_name)) as f:
+          for line in f:
+            pts.append([int(x) for x in line.split(',')])
+        pts = np.array(pts)  
+      
+        # make mask
+        mask = np.zeros((height, width), np.uint8)
+        cv2.drawContours(mask, [pts], -1, (255, 255, 255), -1, cv2.LINE_AA)
+        
         bbox_video = cv2.VideoWriter(
             filename='/home/leducthinh0409/centernet_visualize_{}/'.format(opt.arch) + os.path.basename(video_path),
             fourcc=cv2.VideoWriter_fourcc(*'mp4v'),
@@ -41,7 +58,15 @@ def demo(opt):
      
         num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         for i in tqdm(range(num_frames)):
-            _, img = video.read()
+            _, img_pre = video.read()
+
+            ## do bit-op
+            dst = cv2.bitwise_and(img_pre, img_pre, mask=mask)
+            ## add the white background
+            bg = np.ones_like(img_pre, np.uint8)*255
+            cv2.bitwise_not(bg, bg, mask=mask)
+            img = bg + dst
+
             ret = detector.run(img)
             bboxes.append(ret['results'])
             debugger.add_img(img, img_id='default')
