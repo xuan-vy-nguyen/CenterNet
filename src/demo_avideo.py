@@ -15,7 +15,7 @@ from utils.debugger import Debugger
 
 
 def demo(opt):
-    class_map = {1: 9, 2: 12} # color for boundingbox
+    class_map = {1: 1, 2: 2} # color for boundingbox
     os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
     # opt.debug = max(opt.debug, 1)
     Detector = detector_factory[opt.task]

@@ -65,10 +65,12 @@ def main(opt):
 
   print('Starting training...')
   best = 1e10
+  ely_stop = 5
+  loop = 0
   for epoch in range(start_epoch + 1, opt.num_epochs + 1):
     mark = epoch if opt.save_all else 'last'
     log_dict_train, _ = trainer.train(epoch, train_loader)
-    logger.write('epoch: {} |'.format(epoch))
+    logger.write('epoch: {} - ealy_loop {}|'.format(epoch, loop))
     for k, v in log_dict_train.items():
       logger.scalar_summary('train_{}'.format(k), v, epoch)
       logger.write('{} {:8f} | '.format(k, v))
@@ -84,6 +86,9 @@ def main(opt):
         best = log_dict_val[opt.metric]
         save_model(os.path.join(opt.save_dir, 'model_best.pth'), 
                    epoch, model)
+        loop = 0
+      else:
+        loop += 1
     else:
       save_model(os.path.join(opt.save_dir, 'model_last.pth'), 
                  epoch, model, optimizer)
@@ -95,6 +100,10 @@ def main(opt):
       print('Drop LR to', lr)
       for param_group in optimizer.param_groups:
           param_group['lr'] = lr
+    # early stopping
+    if loop == ely_stop:
+      print('Early Stop')
+      break
   logger.close()
 
 if __name__ == '__main__':
