@@ -15,7 +15,10 @@ from detectors.detector_factory import detector_factory
 from utils.debugger import Debugger
 
 def demo(opt):
-    class_map = {1: 1, 2: 2} # color for boundingbox
+    # creat folder save results
+    os.mkdir('../../data/Detection/bboxes_{}'.format(opt.arch))
+
+    # class_map = {1: 1, 2: 2} # color for boundingbox
     os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
     # opt.debug = max(opt.debug, 1)
     Detector = detector_factory[opt.task]
@@ -29,12 +32,14 @@ def demo(opt):
     # video_paths = [
     #     os.path.join(opt.demo, 'cam_2.mp4')
     # ]
+
     # debugger = Debugger(dataset=opt.dataset, theme=opt.debugger_theme)
 
     for video_path in sorted(video_paths):
         bboxes = []
         video = cv2.VideoCapture(video_path)
         width, height = int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+
         # bbox_video = cv2.VideoWriter(
         #     filename='/home/leducthinh0409/centernet_visualize_{}/'.format(opt.arch) + os.path.basename(video_path),
         #     fourcc=cv2.VideoWriter_fourcc(*'mp4v'),
@@ -45,10 +50,16 @@ def demo(opt):
      
         num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         for i in tqdm(range(num_frames)):
+            # skip_frame
+            if opt.skip_frame > 0:
+                if i % opt.skip_frame == 0:
+                    continue
+
             _, img = video.read()
             
             ret = detector.run(img)
             bboxes.append(ret['results'])
+
             # debugger.add_img(img, img_id='default')
             # for class_id in class_map.keys():
             #     for bbox in ret['results'][class_id]:
@@ -57,12 +68,13 @@ def demo(opt):
             # bbox_img = debugger.imgs['default']
             # bbox_video.write(bbox_img)
 
-        with open('/home/leducthinh0409/bboxes_{}/'.format(opt.arch) + os.path.basename(video_path) + '.pkl', 'wb') as f:
+        with open('../../data/Detection/bboxes_{}/'.format(opt.arch) + os.path.basename(video_path) + '.pkl', 'wb') as f:
             pickle.dump(bboxes, f)
 
 if __name__ == '__main__':
     start = time.time()
     opt = opts().init()
+    print('*skip_frame = ', opt.skip_frame)
     demo(opt)
     end = time.time()
-    print('total_time = ',end - start)
+    print('total_time inference = ', end - start)

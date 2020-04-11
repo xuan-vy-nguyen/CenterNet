@@ -224,6 +224,10 @@ class opts(object):
     self.parser.add_argument('--eval_oracle_dep', action='store_true', 
                              help='use ground truth depth.')
 
+    # inference 
+    self.parser.add_argument('--skip_frame', type=int, default=0, 
+                             help='use for skip_frame.')
+
   def parse(self, args=''):
     if args == '':
       opt = self.parser.parse_args()
