@@ -25,6 +25,9 @@ def demo(opt):
     video_paths = [
         os.path.join(opt.demo, video_name) for video_name in os.listdir(opt.demo) if video_name.split('.')[-1] == 'mp4'
     ]
+    # video_paths = [
+    #     os.path.join(opt.demo, 'cam_2.mp4')
+    # ]
     debugger = Debugger(dataset=opt.dataset, theme=opt.debugger_theme)
 
     for video_path in sorted(video_paths):

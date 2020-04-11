@@ -22,5 +22,3 @@
 1. demo.py: xuất output theo định dạng .pkl - format default của CenterNet.
 2. demo_2.py: xuất output theo định dạng json, hãy đọc bên trong sẽ thấy cấu trúc file json. Lưu ý là bạn có thể chỉnh lại tùy thich.
 3. demo_videos.py: Inference chỉ áp dụng được cho thư mục chứa các file video và inference trên toàn bộ video đó. Chú ý: đã tắt đi phần tạo video kết quả. Muốn sử dụng lại hãy vào và xem code. (và xóa các #).
-4. demo_avideo.py: Inference cho 1 video với tên được set bên trong. Chú ý: đã tắt đi phần tạo video kết quả. Muốn sử dụng lại hãy vào và xem code. (và xóa các #).
-5. demo_x_ROIs.py: Tương tự như demo_x.py nhưng áp dụng cho tập Region of interests images (trong AIC20).
