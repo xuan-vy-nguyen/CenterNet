@@ -14,6 +14,7 @@
 ## Setup Dataset 
 * Đọc noteCenterNet.docx
 * Với dataset sử dụng trong AIC20 thì đó là abc.py nằm trong đường dẫn: "/home/xv/Documents/CenterNet2/src/lib/datasets/dataset/abc.py"
+* Nếu data dạng voc thì có thể sử dụng CenterNet/src/tools/voc2coco/ để convert label (.xml) sang json format coco.
 
 ## Setup Inference
 * Đã đi phần in kết quả đã inference ra màn hình (đọc note sẽ thấy)
