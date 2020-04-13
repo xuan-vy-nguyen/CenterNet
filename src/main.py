@@ -101,7 +101,7 @@ def main(opt):
       for param_group in optimizer.param_groups:
           param_group['lr'] = lr
     # early stopping
-    if loop == ely_stop:
+    if loop >= ely_stop:
       print('Early Stop')
       break
   logger.close()
