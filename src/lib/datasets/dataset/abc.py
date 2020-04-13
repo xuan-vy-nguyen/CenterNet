@@ -81,10 +81,10 @@ class COCO(data.Dataset):
 
           detection = {
               # "image_id": int(image_id),
-              "image_id": image_id,
-              "category_id": int(category_id),
-              "bbox": bbox_out,
-              "score": float("{:.2f}".format(score))
+              "image_id": image_id.cpu().detach(),
+              "category_id": int(category_id.cpu().detach()),
+              "bbox": bbox_out.cpu().detach().numpy(),
+              "score": float("{:.2f}".format(score.cpu().detach()))
           }
           if len(bbox) > 5:
               extreme_points = list(map(self._to_float, bbox[5:13]))
