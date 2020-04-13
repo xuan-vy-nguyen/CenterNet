@@ -82,7 +82,7 @@ class COCO(data.Dataset):
           detection = {
               # "image_id": int(image_id),
               "image_id": image_id.cpu().detach(),
-              "category_id": int(category_id.cpu().detach()),
+              "category_id": int(category_id),
               "bbox": bbox_out.cpu().detach().numpy(),
               "score": float("{:.2f}".format(score.cpu().detach()))
           }
