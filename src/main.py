@@ -68,6 +68,7 @@ def main(opt):
   ely_stop = 5
   loop = 0
   for epoch in range(start_epoch + 1, opt.num_epochs + 1):
+    print('early stop status = {}/{}'.format(loop, ely_stop))
     mark = epoch if opt.save_all else 'last'
     log_dict_train, _ = trainer.train(epoch, train_loader)
     logger.write('epoch: {} - ealy_loop {}|'.format(epoch, loop))
@@ -102,7 +103,7 @@ def main(opt):
           param_group['lr'] = lr
     # early stopping
     if loop >= ely_stop:
-      print('Early Stop')
+      print('Early Stop!')
       break
   logger.close()
 
