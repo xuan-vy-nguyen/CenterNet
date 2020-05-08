@@ -8,7 +8,7 @@ GPU: NVIDIA-Tesla K80
 1. Cài đặt COCOAPI
 ```
 COCOAPI = 'cocoapi'
-!git clone https://github.com/cocodataset/cocoapi.git 'cocoapi'
+git clone https://github.com/cocodataset/cocoapi.git 'cocoapi'
 cd $COCOAPI/PythonAPI
 make
 python setup.py install --user
@@ -50,13 +50,13 @@ https://drive.google.com/file/d/1SWsjrSNaRp3CVe9h3Fu41ezkvXcGPy0_
 Phần này đọc hướng dẫn của Tác giả CenterNet để hiểu rõ các tham số.
 Lệnh mà mình dùng là: 
 ```
-cd CenterNet_ROOT/src
+cd $CenterNet_ROOT/src
 python main.py ctdet --exp_id abc_dla_34 --arch dla_34 --batch_size 32 --num_workers 4 --num_epochs 200
 ```
 ## Inference
 Sau khi đã train được model, dùng 'src/demo_video.py' để inference.
 ```
-cd CenterNet_ROOT/src
+cd $CenterNet_ROOT/src
 python demo_video.py ctdet --arch dla_34 --load_model <link đến model> --demo <link đến data cần infer>
 ```
 
