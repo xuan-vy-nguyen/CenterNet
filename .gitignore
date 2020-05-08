@@ -1,4 +1,4 @@
-data/*
+
 !data/download_abc.sh
 legacy/*
 .DS_Store
