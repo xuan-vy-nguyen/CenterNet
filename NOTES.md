@@ -18,8 +18,8 @@
 
 ## Setup Inference
 * Đã đi phần in kết quả đã inference ra màn hình (đọc note sẽ thấy)
-* Đọc noteCenterNet.docx
+* Đọc document/noteCenterNet.docx
 * Có nhiều file demo.py được dùng cho các mục đích khác nhau:
-1. demo.py: xuất output theo định dạng .pkl - format default của CenterNet.
+1. demo.py: xuất output theo định dạng .pkl - default format của CenterNet.
 2. demo_2.py: xuất output theo định dạng json, hãy đọc bên trong sẽ thấy cấu trúc file json. Lưu ý là bạn có thể chỉnh lại tùy thich.
-3. demo_videos.py: Inference chỉ áp dụng được cho thư mục chứa các file video và inference trên toàn bộ video đó. Chú ý: đã tắt đi phần tạo video kết quả. Muốn sử dụng lại hãy vào và xem code. (và xóa các #).
+3. demo_video.py: Inference chỉ áp dụng được cho thư mục chứa các file video và inference trên toàn bộ video đó. Chú ý: đã tắt đi phần tạo video kết quả. Muốn sử dụng lại hãy vào và xem code. (và xóa các #).

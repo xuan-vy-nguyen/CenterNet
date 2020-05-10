@@ -16,7 +16,7 @@ from utils.debugger import Debugger
 
 def demo(opt):
     # creat folder save results
-    os.mkdir('../../data/Detection/bboxes_{}'.format(opt.arch))
+    os.mkdir('../Detection/bboxes_{}'.format(opt.arch))
 
     # class_map = {1: 1, 2: 2} # color for boundingbox
     os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
@@ -68,7 +68,7 @@ def demo(opt):
             # bbox_img = debugger.imgs['default']
             # bbox_video.write(bbox_img)
 
-        with open('../../data/Detection/bboxes_{}/'.format(opt.arch) + os.path.basename(video_path) + '.pkl', 'wb') as f:
+        with open('../Detection/bboxes_{}'.format(opt.arch) + os.path.basename(video_path) + '.pkl', 'wb') as f:
             pickle.dump(bboxes, f)
 
 if __name__ == '__main__':
