@@ -40,8 +40,9 @@ def demo(opt):
     # video_paths = [
     #     os.path.join(opt.demo, 'cam_2.mp4')
     # ]
-
-    # debugger = Debugger(dataset=opt.dataset, theme=opt.debugger_theme)
+###
+    debugger = Debugger(dataset=opt.dataset, theme=opt.debugger_theme)
+###
 
     for video_path in sorted(video_paths):
         bboxes = []
@@ -68,7 +69,7 @@ def demo(opt):
             
             ret = detector.run(img)
             bboxes.append(ret['results'])
-            
+
 
 ###
             debugger.add_img(img, img_id='default')
