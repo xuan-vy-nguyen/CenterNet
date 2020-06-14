@@ -80,7 +80,7 @@ class COCO(data.Dataset):
           bbox_out  = list(map(self._to_float, bbox[0:4]))
 
           detection = {
-              "image_id": int(image_id),
+              "image_id": image_id,
               # "image_id": image_id.cpu().detach(),
               "category_id": int(category_id),
               "bbox": bbox_out,
