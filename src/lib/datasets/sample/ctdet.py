@@ -33,7 +33,8 @@ class CTDetDataset(data.Dataset):
     ann_ids = self.coco.getAnnIds(imgIds=[img_id])
     anns = self.coco.loadAnns(ids=ann_ids)
     num_objs = min(len(anns), self.max_objs)
-
+    img_path = img_path.split('.jpg')[0]+'.png'
+    # print(img_path)
     img = cv2.imread(img_path)
 
     height, width = img.shape[0], img.shape[1]
@@ -99,6 +100,7 @@ class CTDetDataset(data.Dataset):
     for k in range(num_objs):
       ann = anns[k]
       bbox = self._coco_box_to_bbox(ann['bbox'])
+      # print(ann['category_id'])
       cls_id = int(self.cat_ids[ann['category_id']])
       if flipped:
         bbox[[0, 2]] = width - bbox[[2, 0]] - 1
