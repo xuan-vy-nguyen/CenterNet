@@ -17,10 +17,18 @@ from utils.debugger import Debugger
 def demo(opt):
     # creat folder save results
     os.mkdir('../Detection/bboxes_{}'.format(opt.arch))
+    os.mkdir('../visualization/{}'.format(opt.arch))
 
-    # class_map = {1: 1, 2: 2} # color for boundingbox
+###
+    class_map = {1: 1, 2: 2} # color for boundingbox
+###
+
     os.environ['CUDA_VISIBLE_DEVICES'] = opt.gpus_str
-    # opt.debug = max(opt.debug, 1)
+
+###    
+    opt.debug = max(opt.debug, 1)
+###
+
     Detector = detector_factory[opt.task]
     detector = Detector(opt)
 
@@ -39,15 +47,16 @@ def demo(opt):
         bboxes = []
         video = cv2.VideoCapture(video_path)
         width, height = int(video.get(cv2.CAP_PROP_FRAME_WIDTH)), int(video.get(cv2.CAP_PROP_FRAME_HEIGHT))
+###
+        bbox_video = cv2.VideoWriter(
+            filename='../visualization/{}/'.format(opt.arch) + os.path.basename(video_path),
+            fourcc=cv2.VideoWriter_fourcc(*'mp4v'),
+            fps=float(30),
+            frameSize=(width, height),
+            isColor=True
+        )
+###     
 
-        # bbox_video = cv2.VideoWriter(
-        #     filename='/home/leducthinh0409/centernet_visualize_{}/'.format(opt.arch) + os.path.basename(video_path),
-        #     fourcc=cv2.VideoWriter_fourcc(*'mp4v'),
-        #     fps=float(30),
-        #     frameSize=(width, height),
-        #     isColor=True
-        # )
-     
         num_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         for i in tqdm(range(num_frames)):
             # skip_frame
@@ -59,16 +68,19 @@ def demo(opt):
             
             ret = detector.run(img)
             bboxes.append(ret['results'])
+            
 
-            # debugger.add_img(img, img_id='default')
-            # for class_id in class_map.keys():
-            #     for bbox in ret['results'][class_id]:
-            #         if bbox[4] > opt.vis_thresh:
-            #             debugger.add_coco_bbox(bbox[:4], class_map[class_id], bbox[4], img_id='default')
-            # bbox_img = debugger.imgs['default']
-            # bbox_video.write(bbox_img)
+###
+            debugger.add_img(img, img_id='default')
+            for class_id in class_map.keys():
+                for bbox in ret['results'][class_id]:
+                    if bbox[4] > opt.vis_thresh:
+                        debugger.add_coco_bbox(bbox[:4], class_map[class_id], bbox[4], img_id='default')
+            bbox_img = debugger.imgs['default']
+            bbox_video.write(bbox_img)
+###
 
-        with open('../Detection/bboxes_{}'.format(opt.arch) + os.path.basename(video_path) + '.pkl', 'wb') as f:
+        with open('../Detection/bboxes_{}'.format(opt.arch) + '/' + os.path.basename(video_path) + '.pkl', 'wb') as f:
             pickle.dump(bboxes, f)
 
 if __name__ == '__main__':
