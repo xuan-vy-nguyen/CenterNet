@@ -39,7 +39,7 @@ class COCO(data.Dataset):
     self.class_name = [
       '__background__','car','truck']
     self._valid_ids = [
-      1, 2, 3]
+      0, 1, 2]
     self.cat_ids = {v: i for i, v in enumerate(self._valid_ids)}
     self.voc_color = [(v // 32 * 64 + 64, (v // 8) % 4 * 64, v % 8 * 32) \
                       for v in range(1, self.num_classes + 1)]
